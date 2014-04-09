@@ -1,9 +1,23 @@
 import java.io.*;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.helpers.DefaultHandler;
 
 public class TvmlReader {
 
 	void TvmlReader(/*tvml1*/){
-		
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		dbf.setValidating(true);
+		DocumentBuilder db = dbf.newDocumentBuilder();
+		db.setErrorHandler(new DTDErrorHandler());
+		Document doc = db.parse("http://clave.det.uvigo.es:8080/~lroprof/13-14/tvml14-20-06.xml"); //todo, change
+		String tipo = doc.getDoctype().getName();
+		System.out.println(”El tipo de documento es: "+tipo);
+		Element raiz = doc.getDocumentElement();
+		System.out.println(”El elemento raíz es: ”+raiz.getTagName());
 	}
 	
 	String[] getDays(){
