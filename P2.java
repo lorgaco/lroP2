@@ -10,6 +10,7 @@ public class P2 extends HttpServlet {
     throws IOException, ServletException
     {
     	TvGuide = new TvmlReader();
+    	TvGuide.Read();
     	
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
