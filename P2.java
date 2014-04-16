@@ -1,4 +1,7 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -98,7 +101,7 @@ public class P2 extends HttpServlet {
     		    out.println("<form method='POST' action='?step=3'>");
     		    out.println("<input type='hidden' name='query' value='movies'>");
     		    out.println("<input type='hidden' name='day' value='" + day + "'>");
-    		    String[] channels = TvGuide.getChannels();
+    		    String[] channels = TvGuide.getChannels(day);
    		     	for(int ii=0; ii<channels.length; ii++){
    		     		out.println("<input type='radio' name='channel' value='" + channels[ii] + "' > " + channels[ii] + "<BR>");
    		     		if(ii==channels.length-1){
@@ -150,15 +153,17 @@ public class P2 extends HttpServlet {
     		    out.println("<h2>D&iacute;a: " + day + ", canal: " + channel + "</h2>");
     		    out.println("<h3>Estas son las pel&iacute;culas:</h3>");
     		    out.println("<ul>");
-    		    FilmPkg[] films = TvGuide.getFilms();
-    		    for(int ii=0; ii<films.length; ii++){
-    		    	if(ii==films.length-1){
-        		    	out.println(" <li>" + films[ii].title + " a las " + films[ii].time + "<BR>");
-        		    	out.println(films[ii].synopsis + "<P>");
+    		    List<FilmPkg> films = TvGuide.getFilms(day, channel);
+    		    ListIterator<FilmPkg> it = films.listIterator();
+    		    for(int ii=0; ii<films.size(); ii++){
+    		    	FilmPkg film = it.next();
+    		    	if(ii==films.size()-1){
+        		    	out.println(" <li>" + film.title + " a las " + film.time + "<BR>");
+        		    	out.println(film.synopsis + "<P>");
         		    }
     		    	else{
-    		    		out.println(" <li>" + films[ii].title + " a las " + films[ii].time + "<BR>");
-        		    	out.println(films[ii].synopsis + "<P>");
+    		    		out.println(" <li>" + film.title + " a las " + film.time + "<BR>");
+        		    	out.println(film.synopsis + "<P>");
    		     		}
     		    }
     		    out.println("</ul>");
@@ -181,7 +186,7 @@ public class P2 extends HttpServlet {
     		    out.println("<input type='hidden' name='query' value='shows'>");
     		    out.println("<input type='hidden' name='language' value='" + language + "'>");
     		    out.println("<input type='hidden' name='day' value='" + day + "'>");
-    		    String[] channels = TvGuide.getChannels();
+    		    String[] channels = TvGuide.getChannels(day);
    		     	for(int ii=0; ii<channels.length; ii++){
    		     		out.println("<input type='radio' name='channel' value='" + channels[ii] + "' > " + channels[ii] + "<BR>");
    		     		if(ii==channels.length-1){
