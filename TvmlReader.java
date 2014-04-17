@@ -58,15 +58,15 @@ public class TvmlReader {
 				
 				for(int jj=0; jj<lChannels.getLength(); jj++){
 					Element eChannel = (Element)lChannels.item(jj);
-					addLang(eChannel.getAttribute("lang").toString());
 					
 					// create languages list
-					NodeList lPrograms = eChannel.getElementsByTagName("Programa");
+					addLang(eChannel.getAttribute("lang").toString());
+					/*NodeList lPrograms = eChannel.getElementsByTagName("Programa");
 					for(int ij=0; ij<lPrograms.getLength(); ij++){
 						Element eProgram = (Element)lPrograms.item(ij);
 						String lang = eProgram.getAttribute("langs");
 						if(!lang.equals("")) addLang(lang);
-					}
+					}*/
 					
 					// look for more tvmls
 					NodeList nlUrl = eChannel.getElementsByTagName("UrlTVML");
@@ -108,23 +108,28 @@ public class TvmlReader {
 		}
 		return languages;
 	}
+	List<String> getChannels(String day){
+		return this.getChannels(day, "all");
+	}
 	
-	String[] getChannels(String day){
+	List<String> getChannels(String day, String lang){
+		List<String> channelList = new ArrayList<String>();
 		ListIterator<String> it = daysList.listIterator();
 		for(int ii=0; ii<daysList.size(); ii++){
 			if(it.next().equals(day)) {
 				ListIterator<Document> docIt = DOMList.listIterator(ii);
 				NodeList lChannels = docIt.next().getElementsByTagName("Canal");
-				String[] channels = new String[lChannels.getLength()];
 				for(int jj=0; jj<lChannels.getLength(); jj++){
 					Element eChannel = (Element)lChannels.item(jj);
-					channels[jj] = eChannel.getElementsByTagName("NombreCanal").item(0).getTextContent();
+					if(eChannel.getAttribute("lang").equals(lang) || lang.equals("all")){
+						channelList.add(eChannel.getElementsByTagName("NombreCanal").item(0).getTextContent());
+					}
 				}
-				return channels;
+				return channelList;
 			}
 		}
 		
-		return new String[0];
+		return channelList;
 	}
 	
 	List<FilmPkg> getFilms(String day, String channel){
@@ -145,9 +150,15 @@ public class TvmlReader {
 							if(category.equals("Cine")){
 								FilmPkg film = new FilmPkg();
 								film.title = eFilm.getElementsByTagName("NombrePrograma").item(0).getTextContent();
-								film.synopsis = eFilm.getNodeValue();
 								Element eIntervalo = (Element)eFilm.getElementsByTagName("Intervalo").item(0);  
 								film.time = eIntervalo.getElementsByTagName("HoraInicio").item(0).getTextContent();
+								
+								Element eFilmCp = (Element)eFilm.cloneNode(true); 
+								eFilmCp.getElementsByTagName("Categoria").item(0).setTextContent("");
+								eFilmCp.getElementsByTagName("NombrePrograma").item(0).setTextContent("");
+								((Element)eFilmCp.getElementsByTagName("Intervalo").item(0)).setTextContent("");
+								
+								film.synopsis = eFilmCp.getTextContent();
 								filmList.add(film);
 							}
 						}
@@ -159,15 +170,35 @@ public class TvmlReader {
 		return filmList;
 	}
 	
-	ShowPkg[] getShows(){
-		ShowPkg[] shows = new ShowPkg[3];
-		for(int ii=0; ii<shows.length; ii++){
-			shows[ii] = new ShowPkg();
-			shows[ii].name = "Programa " + ii;
-			shows[ii].time = Integer.toString(16+ii) + ":00";
-			shows[ii].age = Integer.toString(16+ii);
+	List<ShowPkg> getShows(String day, String channel, String lang){
+		List<ShowPkg> showList = new ArrayList<ShowPkg>();
+		ListIterator<String> it = daysList.listIterator();
+		for(int ii=0; ii<daysList.size(); ii++){
+			if(it.next().equals(day)) {
+				ListIterator<Document> docIt = DOMList.listIterator(ii);
+				NodeList lChannels = docIt.next().getElementsByTagName("Canal");
+				for(int jj=0; jj<lChannels.getLength(); jj++){
+					Element eChannel = (Element)lChannels.item(jj);
+					String sChannel = eChannel.getElementsByTagName("NombreCanal").item(0).getTextContent();
+					if((sChannel.equals(channel) || channel.equals("all")) && 
+							(eChannel.getAttribute("lang").equals(lang) || lang.equals("all") )){
+						NodeList lPrograms = eChannel.getElementsByTagName("Programa");
+						for(int ij=0; ij<lPrograms.getLength(); ij++){
+							Element eShow = (Element)lPrograms.item(ij);
+							ShowPkg show = new ShowPkg();
+							show.name = eShow.getElementsByTagName("NombrePrograma").item(0).getTextContent();
+							Element eIntervalo = (Element)eShow.getElementsByTagName("Intervalo").item(0);  
+							show.time = eIntervalo.getElementsByTagName("HoraInicio").item(0).getTextContent();
+							show.age = eShow.getAttribute("edadminima");
+							
+							showList.add(show);
+						}
+					}
+				}
+				return showList;
+			}
 		}
-		return shows;
+		return showList;
 	}
 }
 

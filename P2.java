@@ -73,13 +73,9 @@ public class P2 extends HttpServlet {
    		     	out.println("<input type='hidden' name='query' value='shows'>");
    		     	String[] languages = TvGuide.getLanguages();
    		     	for(int ii=0; ii<languages.length; ii++){
-   		     		if(ii==languages.length-1){
-   		     			out.println("<input type='radio' name='language' value='" + languages[ii] + "' checked> " + languages[ii] + "<BR>");
-   		     		}
-   		     		else{
-   		     			out.println("<input type='radio' name='language' value='" + languages[ii] + "' > " + languages[ii] + "<BR>");
-   		     		}
+   		     		out.println("<input type='radio' name='language' value='" + languages[ii] + "' > " + languages[ii] + "<BR>");
    		     	}
+   		     	out.println("<input type='radio' name='language' value='all' checked> Todos<BR>");
    		     	out.println("<p><input type='submit' value='Enviar'>");
    		     	out.println("<input type='submit' value='Atr&aacute;s' onClick='document.forms[0].method=\"GET\"'>");
    		     	out.println("</form>");
@@ -101,10 +97,12 @@ public class P2 extends HttpServlet {
     		    out.println("<form method='POST' action='?step=3'>");
     		    out.println("<input type='hidden' name='query' value='movies'>");
     		    out.println("<input type='hidden' name='day' value='" + day + "'>");
-    		    String[] channels = TvGuide.getChannels(day);
-   		     	for(int ii=0; ii<channels.length; ii++){
-   		     		out.println("<input type='radio' name='channel' value='" + channels[ii] + "' > " + channels[ii] + "<BR>");
-   		     		if(ii==channels.length-1){
+    		    List<String> channels = TvGuide.getChannels(day);
+    		    ListIterator<String> it = channels.listIterator();
+   		     	for(int ii=0; ii<channels.size(); ii++){
+   		     		String channel = it.next();
+   		     		out.println("<input type='radio' name='channel' value='" + channel + "' > " + channel + "<BR>");
+   		     		if(ii==channels.size()-1){
    		     			out.println("<input type='radio' name='channel' value='all' checked> Todos<BR>");
    		     		}
    		     	}
@@ -157,14 +155,8 @@ public class P2 extends HttpServlet {
     		    ListIterator<FilmPkg> it = films.listIterator();
     		    for(int ii=0; ii<films.size(); ii++){
     		    	FilmPkg film = it.next();
-    		    	if(ii==films.size()-1){
-        		    	out.println(" <li>" + film.title + " a las " + film.time + "<BR>");
-        		    	out.println(film.synopsis + "<P>");
-        		    }
-    		    	else{
-    		    		out.println(" <li>" + film.title + " a las " + film.time + "<BR>");
-        		    	out.println(film.synopsis + "<P>");
-   		     		}
+        		    out.println(" <li>" + film.title + " a las " + film.time + "<BR>");
+        		    out.println(film.synopsis + "<P>");
     		    }
     		    out.println("</ul>");
     		    out.println("<form method='POST'>");
@@ -186,10 +178,12 @@ public class P2 extends HttpServlet {
     		    out.println("<input type='hidden' name='query' value='shows'>");
     		    out.println("<input type='hidden' name='language' value='" + language + "'>");
     		    out.println("<input type='hidden' name='day' value='" + day + "'>");
-    		    String[] channels = TvGuide.getChannels(day);
-   		     	for(int ii=0; ii<channels.length; ii++){
-   		     		out.println("<input type='radio' name='channel' value='" + channels[ii] + "' > " + channels[ii] + "<BR>");
-   		     		if(ii==channels.length-1){
+    		    List<String> channels = TvGuide.getChannels(day, language);
+    		    ListIterator<String> it = channels.listIterator();
+   		     	for(int ii=0; ii<channels.size(); ii++){
+   		     		String channel = it.next();
+   		     		out.println("<input type='radio' name='channel' value='" + channel + "' > " + channel + "<BR>");
+   		     		if(ii==channels.size()-1){
    		     			out.println("<input type='radio' name='channel' value='all' checked> Todos<BR>");
    		     		}
    		     	}
@@ -215,17 +209,13 @@ public class P2 extends HttpServlet {
     		    out.println("<h2>Idioma: " + language + ", d&iacute;a: " + day + " , canal: " + channel + "</h2>");
     		    out.println("<h3><h3>Estos son los programas:</h3></h3>");
     		    out.println("<ul>");
-    		    ShowPkg[] shows = TvGuide.getShows();
-    		    for(int ii=0; ii<shows.length; ii++){
-    		    	if(ii==shows.length-1){
-        		    	out.println(" <li>" + shows[ii].name + " a las " + shows[ii].time + "<BR>");
-        		    	out.println("edad m&iacute;nima " + shows[ii].age + " años. <P>");
-        		    }
-    		    	else{
-    		    		out.println(" <li>" + shows[ii].name + " a las " + shows[ii].time + "<BR>");
-        		    	out.println("edad m&iacute;nima " + shows[ii].age + " años. <P>");
-   		     		}
-    		    }
+    		    List<ShowPkg> shows = TvGuide.getShows(day, channel, language);
+   		     	ListIterator<ShowPkg> it = shows.listIterator();
+   		     	for(int ii=0; ii<shows.size(); ii++){
+   		     		ShowPkg show = it.next();
+   		     		out.println(" <li>" + show.name + " a las " + show.time + "<BR>");
+   		     		out.println("edad m&iacute;nima " + show.age + " años. <P>");
+   		     	}
     		    out.println("</ul>");
     		    out.println("<form method='POST'>");
     		    out.println("<input type='hidden' name='query' value='shows'>");
