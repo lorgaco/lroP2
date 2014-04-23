@@ -48,7 +48,7 @@ public class TvmlReader {
 			
 			Document doc = db.parse("http://localhost:8024/lro24/tvml-ok.xml");
 			DOMList.add(doc);
-			
+
 			ListIterator<Document> it = DOMList.listIterator();
 			int ii=0;
 			do{
@@ -90,23 +90,13 @@ public class TvmlReader {
 			ex.printStackTrace();
 		}
 	}
-	
-	String[] getDays(){
-		String[] days = new String[daysList.size()];
-		ListIterator<String> it = daysList.listIterator();
-		for(int ii=0; ii<daysList.size();ii++){
-			days[ii] = it.next();
-		}
-		return days;
+
+    List<String> getDays(){
+		return daysList;
 	}
-	
-	String[] getLanguages(){
-		String[] languages = new String[langsList.size()];
-		ListIterator<String> it = langsList.listIterator();
-		for(int ii=0; ii<langsList.size();ii++){
-			languages[ii] = it.next();
-		}
-		return languages;
+
+    List<String> getLanguages(){
+		return langsList;
 	}
 	List<String> getChannels(String day){
 		return this.getChannels(day, "all");

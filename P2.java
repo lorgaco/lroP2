@@ -49,13 +49,15 @@ public class P2 extends HttpServlet {
     		    out.println("<h3>Selecciona un d&iacute;a:</h3>");
     		    out.println("<form method='POST' action='?step=2'>");
     		    out.println("<input type='hidden' name='query' value='movies'>");
-    		    String[] days = TvGuide.getDays();
-    		    for(int ii=0; ii<days.length; ii++){
-    		    	if(ii==days.length-1){
-        		    	out.println("<input type='radio' name='day' value='" + days[ii] + "' checked> " + days[ii] + "<BR>");
+                List<String> days = TvGuide.getDays();
+                ListIterator<String> it = days.listIterator();
+    		    for(int ii=0; ii<days.size(); ii++){
+                    String day = it.next();
+    		    	if(ii==days.size()-1){
+        		    	out.println("<input type='radio' name='day' value='" + day + "' checked> " + day + "<BR>");
         		    }
     		    	else{
-    		    		out.println("<input type='radio' name='day' value='" + days[ii] + "' > " + days[ii] + "<BR>");
+    		    		out.println("<input type='radio' name='day' value='" + day + "' > " + day + "<BR>");
    		     		}
     		    }
     		    out.println("<p><input type='submit' value='Enviar'>");
@@ -71,9 +73,11 @@ public class P2 extends HttpServlet {
    		     	out.println("<h3>Selecciona un idioma:</h3>");
    		     	out.println("<form method='POST' action='?step=2'>");
    		     	out.println("<input type='hidden' name='query' value='shows'>");
-   		     	String[] languages = TvGuide.getLanguages();
-   		     	for(int ii=0; ii<languages.length; ii++){
-   		     		out.println("<input type='radio' name='language' value='" + languages[ii] + "' > " + languages[ii] + "<BR>");
+                List<String> languages = TvGuide.getLanguages();
+                ListIterator<String> it = languages.listIterator();
+                for(int ii=0; ii<languages.size(); ii++){
+                    String language = it.next();
+   		     		out.println("<input type='radio' name='language' value='" + language + "' > " + language + "<BR>");
    		     	}
    		     	out.println("<input type='radio' name='language' value='all' checked> Todos<BR>");
    		     	out.println("<p><input type='submit' value='Enviar'>");
