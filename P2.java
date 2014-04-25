@@ -126,14 +126,17 @@ public class P2 extends HttpServlet {
     		    out.println("<input type='hidden' name='query' value='shows'>");
     		    out.println("<input type='hidden' name='language' value='" + language + "'>");
     		    String[] days = TvGuide.getDays();
-    		    for(int ii=0; ii<days.length; ii++){
-    		    	if(ii==days.length-1){
-        		    	out.println("<input type='radio' name='day' value='" + days[ii] + "' checked> " + days[ii] + "<BR>");
-        		    }
-    		    	else{
-    		    		out.println("<input type='radio' name='day' value='" + days[ii] + "' > " + days[ii] + "<BR>");
-   		     		}
-    		    }
+                List<String> days = TvGuide.getDays();
+                ListIterator<String> it = days.listIterator();
+                for(int ii=0; ii<days.size(); ii++){
+                    String day = it.next();
+                    if(ii==days.size()-1){
+                        out.println("<input type='radio' name='day' value='" + day + "' checked> " + day + "<BR>");
+                    }
+                    else{
+                        out.println("<input type='radio' name='day' value='" + day + "' > " + day + "<BR>");
+                    }
+                }
     		    out.println("<p><input type='submit' value='Enviar'>");
     		    out.println("<input type='submit' value='Atr&aacute;s' onClick='document.forms[0].action=\"?step=1\"'>");
     		    out.println("<input type='submit' value='Inicio' onClick='document.forms[0].method=\"GET\"'>");
