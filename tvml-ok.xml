@@ -37,7 +37,7 @@
         <HoraFin>20:00</HoraFin>
         <OtraEmision>
 	   <Fecha>23/12/2001</Fecha>
-	   <UrlTVML>http://clave.det.uvigo.es:8080/~lroprof/tvml-23-12-2001.xml</UrlTVML>
+	   <UrlTVML>http://localhost:8024/lro24/tvml-ok2.xml</UrlTVML>
 	</OtraEmision>
       </Intervalo>
     </Programa>
@@ -70,10 +70,6 @@
       <Intervalo>
         <HoraInicio>20:00</HoraInicio>
         <Duracion>75</Duracion>
-        <OtraEmision>
-	   <Fecha>21/12/2001</Fecha>
-	   <UrlTVML>http://clave.det.uvigo.es:8080/~lroprof/tvml-21-12-2001.xml</UrlTVML>
-	</OtraEmision>
       </Intervalo>
     </Programa>
   </Canal>

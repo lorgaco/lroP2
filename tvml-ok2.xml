@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='ISO-8859-1' standalone='no'?>
+
+<!DOCTYPE Programacion SYSTEM "tvml14.dtd">
+
+<Programacion>
+    <Fecha>24/12/2001</Fecha>
+
+    <Canal lang='es' teletexto='si'>
+        <NombreCanal>TVE1</NombreCanal>
+        <Programa edadminima='3' langs='es'>
+            <NombrePrograma>Los Lunis</NombrePrograma>
+            <Categoria>Infantiles</Categoria>
+            <Intervalo>
+                <HoraInicio>16:00</HoraInicio>
+                <HoraFin>20:00</HoraFin>
+            </Intervalo>
+        </Programa>
+        <Programa edadminima='8' langs='es en'>
+            <NombrePrograma>Documentales de la 2</NombrePrograma>
+            <Categoria>Documentales</Categoria>
+            <Intervalo>
+                <HoraInicio>20:00</HoraInicio>
+                <Duracion>60</Duracion>
+            </Intervalo>
+            Documentales de la 2
+        </Programa>
+    </Canal>
+
+    <Canal lang='es'>
+        <NombreCanal>TVE2</NombreCanal>
+        <Programa edadminima='12'>
+            Hazlo tu mismo 2
+            <NombrePrograma>Bricomania</NombrePrograma>
+            <Categoria>Documentales</Categoria>
+            <Intervalo>
+                <HoraInicio>19:00</HoraInicio>
+                <HoraFin>20:00</HoraFin>
+                <OtraEmision>
+                    <Fecha>23/12/2001</Fecha>
+                    <UrlTVML>http://localhost:8024/lro24/tvml-ok3.xml</UrlTVML>
+                </OtraEmision>
+            </Intervalo>
+        </Programa>
+        <Programa edadminima='12' langs='es fr de'>
+            <NombrePrograma>Cine de Barrio</NombrePrograma>
+            Una pelicula vieja
+            <Categoria>Cine</Categoria>
+            <Intervalo>
+                <HoraInicio>20:00</HoraInicio>
+                <Duracion>60</Duracion>
+            </Intervalo>
+        </Programa>
+    </Canal>
+
+    <Canal lang='en' teletexto='si'>
+        <NombreCanal>HBO</NombreCanal>
+        <Formato>16:9</Formato>
+        <Programa edadminima='3' langs='es'>
+            <NombrePrograma>Game of Thrones</NombrePrograma>
+            <Categoria>Series</Categoria>
+            <Intervalo>
+                <HoraInicio>15:00</HoraInicio>
+                <HoraFin>16:00</HoraFin>
+            </Intervalo>
+        </Programa>
+        <Programa edadminima='8' langs='es en de'>
+            Las ultimas noticias de los deportes
+            <NombrePrograma>Deportes de riesgo</NombrePrograma>
+            <Categoria>Deportes</Categoria>
+            <Intervalo>
+                <HoraInicio>20:00</HoraInicio>
+                <Duracion>75</Duracion>
+                <OtraEmision>
+                    <Fecha>21/12/2001</Fecha>
+                    <UrlTVML>http://localhost:8024/lro24/tvml-ok4.xml</UrlTVML>
+                </OtraEmision>
+            </Intervalo>
+        </Programa>
+    </Canal>
+
+    <Canal lang='it' teletexto='si'>
+        <NombreCanal>Discovery Max</NombreCanal>
+        <Formato>4:3</Formato>
+        <Programa edadminima='8' langs='en es it'>
+            <NombrePrograma>Joyas Sobre Ruedas</NombrePrograma>
+            <Categoria>Documentales</Categoria>
+            <Intervalo>
+                <HoraInicio>11:00</HoraInicio>
+                <HoraFin>13:00</HoraFin>
+            </Intervalo>
+            Ford Capri
+        </Programa>
+    </Canal>
+</Programacion>

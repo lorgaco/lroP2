@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='ISO-8859-1' standalone='no'?>
+
+<!DOCTYPE Programacion SYSTEM "tvml14.dtd">
+
+<Programacion>
+    <Fecha>17/12/2001</Fecha>
+
+    <Canal lang='en' teletexto='si'>
+        <NombreCanal>HBO</NombreCanal>
+        <Formato>16:9</Formato>
+        <Programa edadminima='3' langs='es'>
+            <NombrePrograma>Game of Thrones</NombrePrograma>
+            <Categoria>Series</Categoria>
+            <Intervalo>
+                <HoraInicio>15:00</HoraInicio>
+                <HoraFin>16:00</HoraFin>
+            </Intervalo>
+        </Programa>
+    </Canal>
+</Programacion>
