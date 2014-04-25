@@ -125,7 +125,6 @@ public class P2 extends HttpServlet {
     		    out.println("<form method='POST' action='?step=3'>");
     		    out.println("<input type='hidden' name='query' value='shows'>");
     		    out.println("<input type='hidden' name='language' value='" + language + "'>");
-    		    String[] days = TvGuide.getDays();
                 List<String> days = TvGuide.getDays();
                 ListIterator<String> it = days.listIterator();
                 for(int ii=0; ii<days.size(); ii++){
