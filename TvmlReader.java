@@ -87,8 +87,11 @@ public class TvmlReader {
             return "readed" + ii;
 			
 		}catch(Exception ex){
-			ex.printStackTrace();
-            return ex.getStackTrace().toString();
+			//ex.printStackTrace();
+            final StringWriter sw = new StringWriter();
+            final PrintWriter pw = new PrintWriter(sw, true);
+            ex.printStackTrace(pw);
+            return sw.getBuffer().toString();
 		}
 	}
 
