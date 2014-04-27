@@ -13,7 +13,7 @@ public class P2 extends HttpServlet {
     throws IOException, ServletException
     {
     	TvGuide = new TvmlReader();
-    	int n= TvGuide.Read();
+    	String n= TvGuide.Read();
     	
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();

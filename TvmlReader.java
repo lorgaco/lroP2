@@ -36,7 +36,7 @@ public class TvmlReader {
 		}
 	}
 	
-	int Read(){
+	String Read(){
 		try{
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setValidating(true);
@@ -84,11 +84,11 @@ public class TvmlReader {
 				
 				ii++;
 			}while(ii<DOMList.size());
-            return ii;
+            return "readed" + ii;
 			
 		}catch(Exception ex){
 			ex.printStackTrace();
-            return -1;
+            return ex.getMessage();
 		}
 	}
 
