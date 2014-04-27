@@ -52,7 +52,7 @@ public class TvmlReader {
 			ListIterator<Document> it = DOMList.listIterator();
 			int ii=0;
 			do{
-				doc = it.next();
+				doc = DOMList.listIterator(ii+1);
 				NodeList lChannels = doc.getElementsByTagName("Canal");
 				daysList.add(doc.getDocumentElement().getElementsByTagName("Fecha").item(0).getTextContent());
 				
