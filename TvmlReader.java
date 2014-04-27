@@ -84,12 +84,12 @@ public class TvmlReader {
 				
 				ii++;
 			}while(ii<DOMList.size());
-			
+            return ii;
 			
 		}catch(Exception ex){
 			ex.printStackTrace();
+            return -1;
 		}
-        return ii;
 	}
 
     List<String> getDays(){
