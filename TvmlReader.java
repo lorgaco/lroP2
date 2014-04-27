@@ -36,7 +36,7 @@ public class TvmlReader {
 		}
 	}
 	
-	void Read(){
+	int Read(){
 		try{
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setValidating(true);
@@ -89,6 +89,7 @@ public class TvmlReader {
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
+        return ii;
 	}
 
     List<String> getDays(){
@@ -98,6 +99,7 @@ public class TvmlReader {
     List<String> getLanguages(){
 		return langsList;
 	}
+
 	List<String> getChannels(String day){
 		return this.getChannels(day, "all");
 	}
