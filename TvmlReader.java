@@ -88,7 +88,7 @@ public class TvmlReader {
 			
 		}catch(Exception ex){
 			ex.printStackTrace();
-            return ex.getMessage();
+            return ex.getStackTrace();
 		}
 	}
 
