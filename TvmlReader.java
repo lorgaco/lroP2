@@ -36,7 +36,7 @@ public class TvmlReader {
 		}
 	}
 	
-	String Read(){
+	Void Read(){
 		try{
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setValidating(true);
@@ -47,6 +47,7 @@ public class TvmlReader {
 			daysList = new ArrayList<String>();
 			
 			Document doc = db.parse("http://localhost:8024/lro24/tvml-ok.xml");
+            daysList.add(doc.getDocumentElement().getElementsByTagName("Fecha").item(0).getTextContent());
 			DOMList.add(doc);
 
 			ListIterator<Document> it = DOMList.listIterator();
@@ -55,30 +56,24 @@ public class TvmlReader {
 				it = DOMList.listIterator(ii);
                 doc = it.next();
 				NodeList lChannels = doc.getElementsByTagName("Canal");
-				daysList.add(doc.getDocumentElement().getElementsByTagName("Fecha").item(0).getTextContent());
 				
 				for(int jj=0; jj<lChannels.getLength(); jj++){
 					Element eChannel = (Element)lChannels.item(jj);
 					
 					// create languages list
 					addLang(eChannel.getAttribute("lang").toString());
-					/*NodeList lPrograms = eChannel.getElementsByTagName("Programa");
-					for(int ij=0; ij<lPrograms.getLength(); ij++){
-						Element eProgram = (Element)lPrograms.item(ij);
-						String lang = eProgram.getAttribute("langs");
-						if(!lang.equals("")) addLang(lang);
-					}*/
 					
 					// look for more tvmls
 					NodeList nlUrl = eChannel.getElementsByTagName("UrlTVML");
-                    NodeList nlDate = eChannel.getElementsByTagName("Fecha")
+                    NodeList nlDate = eChannel.getElementsByTagName("Fecha");
 					if(nlUrl.getLength()>0 && nlDate.getLength()>0){
-                        date = nlDate.item(0).getTextContent();
+                        String date = nlDate.item(0).getTextContent();
                         if(!daysList.contains(date)) {
                             url = nlUrl.item(0).getTextContent();
                             try {
                                 doc = db.parse(url);
                                 DOMList.add(doc);
+                                daysList.add(date);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                                 url = "no doc found";
@@ -88,7 +83,6 @@ public class TvmlReader {
 				}
                 ii++;
 			}while(ii<DOMList.size());
-            return "readed" + ii;
 			
 		}catch(Exception ex){
 			//ex.printStackTrace();
