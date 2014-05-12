@@ -71,15 +71,19 @@ public class TvmlReader {
 					
 					// look for more tvmls
 					NodeList nlUrl = eChannel.getElementsByTagName("UrlTVML");
-					if(nlUrl.getLength()>0){
-						url=nlUrl.item(0).getTextContent();
-						try{
-							doc = db.parse(url);
-							DOMList.add(doc);
-						}catch(Exception ex){
-							ex.printStackTrace();
-							url="no doc found";
-						}
+                    NodeList nlDate = eChannel.getElementsByTagName("Fecha")
+					if(nlUrl.getLength()>0 && nlDate.getLength()>0){
+                        date = nlDate.item(0).getTextContent();
+                        if(!daysList.contains(date)) {
+                            url = nlUrl.item(0).getTextContent();
+                            try {
+                                doc = db.parse(url);
+                                DOMList.add(doc);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                                url = "no doc found";
+                            }
+                        }
 					}
 				}
                 ii++;
