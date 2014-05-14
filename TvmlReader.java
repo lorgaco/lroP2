@@ -91,7 +91,7 @@ public class TvmlReader {
                                 final StringWriter sw = new StringWriter();
                                 final PrintWriter pw = new PrintWriter(sw, true);
                                 ex.printStackTrace(pw);
-                                errors = errors + ex.toString() + "<br /><br />";
+                                errors = errors + "Error: " + ex.toString() + "<br /><br />";
                             }
                         }
 					}
