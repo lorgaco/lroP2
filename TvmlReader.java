@@ -217,7 +217,7 @@ class TVML_ErrorHandler extends DefaultHandler {
     String Error;
 
 	public TVML_ErrorHandler () {
-        Error = "Ok"
+        Error = "Ok";
     }
 	public void warning(SAXParseException spe) {
 		Error = "Warning: "+spe.toString();
