@@ -37,8 +37,10 @@ public class TvmlReader {
 	}
 	
 	String Read(){
+
+        String errors = "All files ok";
+
 		try{
-            String errors = "All files ok";
 
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setValidating(true);
