@@ -84,6 +84,7 @@ public class TvmlReader {
                                     daysList.add(date);
                                 }
                                 else {
+                                    if(errors.equals("All files ok")) errors = "";
                                     errors = errors + Error + "<br /><br />";
                                 }
                             } catch (Exception ex) {
