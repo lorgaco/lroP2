@@ -1,4 +1,5 @@
 import java.io.*;
+import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -45,7 +46,8 @@ public class TvmlReader {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setValidating(true);
 			DocumentBuilder db = dbf.newDocumentBuilder();
-			db.setErrorHandler(new TVML_ErrorHandler());
+            TVML_ErrorHandler ErrorHandler = new TVML_ErrorHandler()
+			db.setErrorHandler(ErrorHandler);
 			DOMList = new ArrayList<Document>();
 			langsList = new ArrayList<String>();
 			daysList = new ArrayList<String>();
@@ -76,14 +78,20 @@ public class TvmlReader {
                             url = nlUrl.item(0).getTextContent();
                             try {
                                 doc = db.parse(url);
-                                DOMList.add(doc);
-                                daysList.add(date);
+                                String Error = ErrorHandler.getError();
+                                if(Error.equals("Ok")) {
+                                    DOMList.add(doc);
+                                    daysList.add(date);
+                                }
+                                else {
+                                    errors = errors + Error + "<br /><br />";
+                                }
                             } catch (Exception ex) {
                                 if(errors.equals("All files ok")) errors = "";
                                 final StringWriter sw = new StringWriter();
                                 final PrintWriter pw = new PrintWriter(sw, true);
                                 ex.printStackTrace(pw);
-                                errors = errors + " " + sw.getBuffer().toString() + "<br />";
+                                errors = errors + sw.getBuffer().toString() + "<br /><br />";
                             }
                         }
 					}
@@ -205,16 +213,26 @@ public class TvmlReader {
 }
 
 class TVML_ErrorHandler extends DefaultHandler {
-	public TVML_ErrorHandler () {}
+
+    String Error;
+
+	public TVML_ErrorHandler () {
+        Error = "Ok"
+    }
 	public void warning(SAXParseException spe) {
-		System.out.println("Warning: "+spe.toString());
+		Error = "Warning: "+spe.toString();
 	}
 	public void error(SAXParseException spe) {
-		System.out.println("Error: "+spe.toString());
+        Error = "Error: "+spe.toString();
 	}
 	public void fatalerror(SAXParseException spe) {
-		System.out.println("Fatal Error: "+spe.toString());
+        Error = "Fatal Error: "+spe.toString();
 	}
+    public String getError() {
+        String toReturn = new String(Error);
+        Error = "Ok";
+        return toReturn;
+    }
 }
 
 
