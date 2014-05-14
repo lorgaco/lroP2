@@ -13,7 +13,7 @@ public class P2 extends HttpServlet {
     throws IOException, ServletException
     {
     	TvGuide = new TvmlReader();
-    	TvGuide.Read();
+    	String errors = TvGuide.Read();
     	
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -22,6 +22,7 @@ public class P2 extends HttpServlet {
         out.println("</head><body>");
         out.println("<h1>Servicio de consulta de la programaci&oacute;n</h1>");
         out.println("<h2>Bienvenido a este servicio</h2>");
+        out.println("Estado de los TVML: " + errors);
         out.println("<h3>Selecciona lo que quieres buscar:</h3>");
         out.println("<form method='POST' action='?step=1'>");
         out.println("<input type='radio' name='query' value='shows' checked> Consulta series<br>");

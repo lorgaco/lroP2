@@ -36,8 +36,10 @@ public class TvmlReader {
 		}
 	}
 	
-	Void Read(){
+	String Read(){
 		try{
+            String errors = "All files ok";
+
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			dbf.setValidating(true);
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -46,7 +48,7 @@ public class TvmlReader {
 			langsList = new ArrayList<String>();
 			daysList = new ArrayList<String>();
 			
-			Document doc = db.parse("http://localhost:8024/lro24/tvml-ok.xml");
+			Document doc = db.parse("http://clave.det.uvigo.es:8080/~lroprof/13-14/tvml14-20-06.xml");
             daysList.add(doc.getDocumentElement().getElementsByTagName("Fecha").item(0).getTextContent());
 			DOMList.add(doc);
 
@@ -75,8 +77,11 @@ public class TvmlReader {
                                 DOMList.add(doc);
                                 daysList.add(date);
                             } catch (Exception ex) {
-                                ex.printStackTrace();
-                                url = "no doc found";
+                                if(errors.equals("All files ok")) errors = "";
+                                final StringWriter sw = new StringWriter();
+                                final PrintWriter pw = new PrintWriter(sw, true);
+                                ex.printStackTrace(pw);
+                                errors = errors + " " + sw.getBuffer().toString();
                             }
                         }
 					}
@@ -91,6 +96,8 @@ public class TvmlReader {
             ex.printStackTrace(pw);
             return sw.getBuffer().toString();
 		}
+
+        return errors;
 	}
 
     List<String> getDays(){
