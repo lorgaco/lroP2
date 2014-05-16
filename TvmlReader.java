@@ -191,18 +191,20 @@ public class TvmlReader {
 				for(int jj=0; jj<lChannels.getLength(); jj++){
 					Element eChannel = (Element)lChannels.item(jj);
 					String sChannel = eChannel.getElementsByTagName("NombreCanal").item(0).getTextContent();
-					if((sChannel.equals(channel) || channel.equals("all")) && 
-							(eChannel.getAttribute("lang").equals(lang) || lang.equals("all") )){
-						NodeList lPrograms = eChannel.getElementsByTagName("Programa");
-						for(int ij=0; ij<lPrograms.getLength(); ij++){
-							Element eShow = (Element)lPrograms.item(ij);
-							ShowPkg show = new ShowPkg();
-							show.name = eShow.getElementsByTagName("NombrePrograma").item(0).getTextContent();
-							Element eIntervalo = (Element)eShow.getElementsByTagName("Intervalo").item(0);  
-							show.time = eIntervalo.getElementsByTagName("HoraInicio").item(0).getTextContent();
-							show.age = eShow.getAttribute("edadminima");
-							
-							showList.add(show);
+					NodeList lPrograms = eChannel.getElementsByTagName("Programa");
+					for(int ij=0; ij<lPrograms.getLength(); ij++){
+						Element eShow = (Element)lPrograms.item(ij);
+                        if(((eShow.getAttribute("langs").equals("") && eChannel.getAttribute("lang").equals(lang))
+                                || (!eShow.getAttribute("langs").equals("") && eShow.getAttribute("langs").contains(lang)))
+                                || lang.equals("all")){
+
+                            ShowPkg show = new ShowPkg();
+                            show.name = eShow.getElementsByTagName("NombrePrograma").item(0).getTextContent();
+                            Element eIntervalo = (Element)eShow.getElementsByTagName("Intervalo").item(0);
+                            show.time = eIntervalo.getElementsByTagName("HoraInicio").item(0).getTextContent();
+                            show.age = eShow.getAttribute("edadminima");
+
+                            showList.add(show);
 						}
 					}
 				}

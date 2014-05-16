@@ -185,7 +185,7 @@ public class P2 extends HttpServlet {
     		    out.println("<input type='hidden' name='query' value='shows'>");
     		    out.println("<input type='hidden' name='language' value='" + language + "'>");
     		    out.println("<input type='hidden' name='day' value='" + day + "'>");
-    		    List<String> channels = TvGuide.getChannels(day, language);
+    		    List<String> channels = TvGuide.getChannels(day);
     		    ListIterator<String> it = channels.listIterator();
    		     	for(int ii=0; ii<channels.size(); ii++){
    		     		String channel = it.next();
